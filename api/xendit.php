@@ -21,7 +21,7 @@
     'channel_code' => 'PH_GCASH',
     'phone' => '639762220951',
     'channel_properties' => [
-      'success_redirect_url' => 'http://localhost/furniture/success.php',
+      'success_redirect_url' => 'http://localhost/jws-furniture/success.php',
       'failure_redirect_url' => 'https://capstone-d51c8.web.app/failed.html',
     ],
     'items' => [

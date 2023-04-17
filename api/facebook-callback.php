@@ -17,13 +17,10 @@
   $uid = $user -> getId();
   $name = $user['name'];
 
-  // $url = "https://graph.facebook.com/$user_id?fields=email&access_token=$token";
-  // $responseEmail = file_get_contents($url);
-  // $data = json_decode($responseEmail);
-  // $email = $data -> email;
-
   $checkUser = $conn -> query("SELECT * FROM user WHERE uid='$uid'");
+
   if($checkUser -> num_rows == 0){
+    // echo 'new user';
     $sql = "INSERT INTO user(name, uid, photo_url, email) VALUE(
       '$name',
       '$uid',
@@ -39,6 +36,7 @@
       echo 0;
     }
   }else {
+    // echo 'existing';
     echo 2;
   }
   

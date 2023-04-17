@@ -42,10 +42,10 @@
     if($charge['status'] == 'SUCCEEDED'){
       $conn -> query("UPDATE transactions SET status='SUCCEEDED', orders='$client_cart_string' WHERE reference_number='".$_SESSION['reference']."'");
       echo 'Payment Successful';
-      echo "<a href='http://localhost/furniture/cart.html'>Back to Cart</a>";
+      echo "<a href='http://localhost/jws-furniture/cart.html'>Back to Cart</a>";
     }
   }else {
-    echo "<a href='http://localhost/furniture/cart.html'>Back to Cart</a>";
+    echo "<a href='http://localhost/jws-furniture/cart.html'>Back to Cart</a>";
   }
   
   unset($_SESSION['reference']);

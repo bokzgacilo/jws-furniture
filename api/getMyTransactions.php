@@ -12,7 +12,6 @@
     if($row['orders'] == 'none'){
       echo "<h2>No Transaction</h2>";
     }else {
-
       echo "<h2>Transactions</h2>";
 
       $orders = $row['orders'];

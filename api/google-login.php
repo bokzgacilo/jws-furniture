@@ -4,28 +4,33 @@
   include('../config/database.php');
   $client = new Google\Client();
   $client -> setAuthConfig('../config/google-client-secret-key.json');
-  $client -> setRedirectUri('http://localhost/furniture/api/google-login.php');
+  $client -> setRedirectUri('http://localhost/jws-furniture/api/google-login.php');
   $client -> addScope('profile');
   $client -> addScope('email');
-  // $client -> addScope('image');
-
 
   if (isset($_GET['code'])) {
     $token = $client -> fetchAccessTokenWithAuthCode($_GET['code']);
+
     $google_service = new Google_Service_Oauth2($client);
+
     $userData = $google_service -> userinfo -> get();
+    
     $uid = $userData['id'];
     $email = $userData['email'];
-    $uid = $userData['id'];
     $name = $userData['name'];
     $picture = $userData['picture'];
+
+
     // print_r($userData);
     echo "$uid, $email, $name";
 
     $checkUser = $conn -> query("SELECT * FROM user WHERE uid='$uid'");
+
     $_SESSION['authenticated'] = 'true';
 
     if($checkUser -> num_rows == 0){
+      echo 'new user';
+
       $sql = "INSERT INTO user(name, uid, photo_url, email) VALUE(
         '$name',
         '$uid',
@@ -43,7 +48,6 @@
     }
   }else {
     header("location:" . $client -> createAuthUrl());
-    // echo "<a href='".$client -> createAuthUrl()."'>Login</a>";
   }
 
   $conn -> close();
