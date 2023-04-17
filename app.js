@@ -9,44 +9,44 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const googleButton = document.querySelector("#google-login");
-const facebookButton = document.querySelector("#facebook-login");
+// const googleButton = document.querySelector("#google-login");
+const facebookButton = document.getElementById("facebook-login");
 
 
-googleButton.addEventListener("click", () => {
-  firebase.auth().signOut()
-  .then(function() {
-    console.log("User signed out successfully");
-  })
+// googleButton.addEventListener("click", () => {
+//   firebase.auth().signOut()
+//   .then(function() {
+//     console.log("User signed out successfully");
+//   })
 
-  const provider = new firebase.auth.GoogleAuthProvider();
+//   const provider = new firebase.auth.GoogleAuthProvider();
 
-  firebase.auth().signInWithPopup(provider)
-    .then((result) => {
-      const user = result.user;
-      $.ajax({
-        type: 'post',
-        url: 'api/loginGoogle.php',
-        data: {
-          email: user.email,
-          fullname: user.displayName,
-          photoURL: user.photoURL,
-          uid: user.uid
-        },
-        success: (response) => {
-          if(response == 1){
-            alert('Login from Google was successful');
-            localStorage.setItem('authenticated', 'true');
-            localStorage.setItem('uid', user.uid)
-            location.reload();
-          }
-        }
-      })
-    })
-});
+//   firebase.auth().signInWithPopup(provider)
+//     .then((result) => {
+//       const user = result.user;
+//       $.ajax({
+//         type: 'post',
+//         url: 'api/loginGoogle.php',
+//         data: {
+//           email: user.email,
+//           fullname: user.displayName,
+//           photoURL: user.photoURL,
+//           uid: user.uid
+//         },
+//         success: (response) => {
+//           if(response == 1){
+//             alert('Login from Google was successful');
+//             localStorage.setItem('authenticated', 'true');
+//             localStorage.setItem('uid', user.uid)
+//             location.reload();
+//           }
+//         }
+//       })
+//     })
+// });
 
 facebookButton.addEventListener("click", () => {
-  alert()
+  // alert()
   // $.ajax({
   //   type: 'get',
   //   url: 'api/facebook-login.php',
@@ -54,36 +54,36 @@ facebookButton.addEventListener("click", () => {
 
   //   }
   // })
-  // firebase.auth().signOut()
-  // .then(function() {
-  //   console.log("User signed out successfully");
-  // })
+  firebase.auth().signOut()
+  .then(function() {
+    console.log("User signed out successfully");
+  })
 
-  // const provider = new firebase.auth.FacebookAuthProvider();
+  const provider = new firebase.auth.FacebookAuthProvider();
 
-  // firebase.auth().signInWithPopup(provider)
-  // .then((result) => {
-  //   const user = result.user;
+  firebase.auth().signInWithPopup(provider)
+  .then((result) => {
+    const user = result.user;
 
-  //   $.ajax({
-  //     type: 'post',
-  //     url: 'api/loginFacebook.php',
-  //     data: {
-  //       email: user.email,
-  //       fullname: user.displayName,
-  //       photoURL: user.photoURL,
-  //       uid: user.uid
-  //     },
-  //     success: (response) => {
-  //       if(response == 1){
-  //         alert('Login from Facebook was successful');
-  //         localStorage.setItem('authenticated', 'true');
-  //         localStorage.setItem('uid', user.uid)
-  //         location.reload();
-  //       }
-  //     }
-  //   })
-  // })
+    $.ajax({
+      type: 'post',
+      url: 'api/loginFacebook.php',
+      data: {
+        email: user.email,
+        fullname: user.displayName,
+        photoURL: user.photoURL,
+        uid: user.uid
+      },
+      success: (response) => {
+        if(response == 1){
+          alert('Login from Facebook was successful');
+          localStorage.setItem('authenticated', 'true');
+          localStorage.setItem('uid', user.uid)
+          location.reload();
+        }
+      }
+    })
+  })
 });
 
 function signout() {
