@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page</title>
+  <link rel="stylesheet" href="css/product-page.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+</head>
+<body>
+  
+  <style>
+    .container {
+      padding: 1rem;
+    }
+
+    #add-product-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  </style>
+
+  <div id="exampleModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Product Modal</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="add-product-body" class="modal-body">
+          <input required class="form-control" id='prod_name' type="text" placeholder="Product Name" />
+          <input required class="form-control" id='prod_price' type="number" placeholder="Product Price" />
+          <input required class="form-control" id='prod_url' type="text" placeholder="Product Image URL" />
+          <button type='submit' class="btn btn-success">Add Product</button>
+        </form>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <a href="index.html" class="btn btn-primary btn-sm">Back to Homepage</a>
+    <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success btn-sm">Add Product</button>
+    <div class="product-table-container">
+      <table class="table w-100">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Image URL</th>
+          </tr>
+        </thead>
+        <tbody id="table-content">
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    function getAllProduct(){
+      $.ajax({
+        type: 'get',
+        url: 'api/product/getAll.php',
+        success: (response) => {
+          $('#table-content').html(response)
+        }
+      })
+    }
+
+    $(document).ready(function(){
+      getAllProduct();
+
+      $('#add-product-body').submit(function(event){
+        event.preventDefault();
+
+        var product_name = $('#prod_name').val();
+        var product_price = $('#prod_price').val();
+        var product_url = $('#prod_url').val();
+
+        $.ajax({
+          type: 'post',
+          url: 'api/product/addProduct.php',
+          data: {
+            name: product_name,
+            price: product_price,
+            url: product_url
+          },
+          success: (response) => {
+
+            if(response == 1){
+              alert(`Product ${product_name}, was added`);
+              getAllProduct();
+              $('#add-product-body')[0].reset()
+            }
+
+            $('#exampleModal').modal('toggle');
+          }
+        })
+      })
+    })
+  </script>
+
+  <script src="assets//bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

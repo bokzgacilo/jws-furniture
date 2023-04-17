@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <title>My Cart</title>
+  <link rel="stylesheet" href="css/cart.css">  
+</head>
+<body>
+  <div class="modal fade" id="transactionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-4" id="transactionModalLabel">Transaction</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="transaction-body" class="modal-body">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <a class="btn btn-primary" href="shop.html">Back to Shop</a>
+    <main class="container row">
+      <h2>My Cart</h2>
+
+      <div class="col-5">
+        <div id="my-cart">
+
+        </div>
+        <div class="total">
+          
+        </div>
+      </div>
+      <div class="col-7">
+        <div id="my-transactions">
+          
+        </div>
+      </div>
+      
+    </main>
+  </div>
+  <script src="assets//bootstrap/js/bootstrap.min.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+    "require": {
+        "xendit/xendit-php": "^2.19",
+        "facebook/graph-sdk": "^5.1",
+        "google/apiclient": "2.12.1"
+    }
+}
