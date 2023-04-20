@@ -4,7 +4,7 @@
   include('../config/database.php');
   $client = new Google\Client();
   $client -> setAuthConfig('../config/google-client-secret-key.json');
-  $client -> setRedirectUri('http://jwsfurniture-website.preview-domain.com/api/google-login.php');
+  $client -> setRedirectUri('https://jwsfurniture-website/api/google-login.php');
   $client -> addScope('profile');
   $client -> addScope('email');
 
