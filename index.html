@@ -13,11 +13,9 @@
 <body>
 
 <header class="header">    
-    <a href="index.html" class="logo"> <i class="fas fa-lightbulb"></i> JWS </a>
-    <form action="" class="search-form">
-        <input type="search" placeholder="search here..." id="search-box">
-        <label for="search-box" class="fas fa-search"></label>
-    </form>
+    <a href="index.html" class="logo">
+      <img src="assets/logo.png" />
+    </a>
     <div class="header-action-buttons icons">
       <div id="menu-btn" class="fas fa-bars"></div>
       <div id="search-btn" class="fas fa-search"></div>
@@ -28,7 +26,6 @@
         <i class='fas fa-user'></i>
       </div>
     </div>
-
 </header>
 
 <div id="closer" class="fas fa-times"></div>
@@ -38,62 +35,44 @@
     <a href="cart.html">cart</a>
     <a href="product.html">product</a>
     <a href="shop.html">shop</a>
-    <!-- <a href="about.html">about</a>
-    <a href="team.html">team</a>
-    <a href="blog.html">blog</a>
-    <a href="contact.html">contact</a> -->
 </nav>
 
 <div class="login-form">
   <form action="">
-    <!-- <h3>login form</h3>
-    <input type="email" placeholder="Enter your email" class="box">
-    <input type="password" placeholder="Enter your password" class="box">
-    <div class="remember">
-      <input type="checkbox" name="" id="remember-me">
-      <label for="remember-me">remember me</label>
-    </div>
-    <input type="submit" value="login now" class="btn">
-    <p>forget password? <a href="#">click here</a></p>
-    <p>don't have an account? <a href="#">create now</a></p> -->
     <h3>Sign In</h3>
     <a href="api/google-login.php" class="btn">Google</a>
     <a id="facebook-login" class="btn">Facebook</a>
-    <!-- <a href="api/facebook-login.php" class="btn">Facebook</a> -->
   </form>
 </div>
 
 <!-- home section starts  -->
 
 <section class="home">
-
-    <div class="slides-container">
-
-        <div class="slide active">
-            <div class="content">
-                <span>Made in Oak Wood</span>
-                <h3>Two Door Cabinet</h3>
-                <p>Oak Wood Two Drawer File in medium finish. This item is stocked in medium finish or special order in other color.</p>
-                <a href="#" class="btn">shop now</a>
-            </div>
-            <div class="image">
-                <img src="image/home-img-1.png" alt="">
-            </div>
-        </div>
-
-        <div class="slide">
-            <div class="content">
-                <span>Made in Oak Wood</span>
-                <h3>Condo Chair</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur quisquam, magnam enim sed debitis perspiciatis.</p>
-                <a href="#" class="btn">shop now</a>
-            </div>
-            <div class="image">
-                <img src="image/home-img-2.png" alt="">
-            </div>
-        </div>
-
+  <div class="slides-container">
+    <div class="slide active">
+      <div class="content">
+        <span>Made in Oak Wood</span>
+        <h3>Two Door Cabinet</h3>
+        <p>Oak Wood Two Drawer File in medium finish. This item is stocked in medium finish or special order in other color.</p>
+          <a href="shop.html" class="btn">shop now</a>
+      </div>
+      <div class="image">
+        <img src="image/home-img-1.png" alt="">
+      </div>
     </div>
+
+    <div class="slide">
+      <div class="content">
+        <span>Made in Oak Wood</span>
+        <h3>Condo Chair</h3>
+        <p>A Condo Chair that made out of oak wood. This chair is very sturdy</p>
+        <a href="shop.html" class="btn">shop now</a>
+      </div>
+      <div class="image">
+        <img src="image/home-img-2.png" alt="">
+      </div>
+    </div>
+  </div>
 
     <div id="slide-next" onclick="next()" class="fas fa-angle-right"></div>
     <div id="slide-prev" onclick="prev()" class="fas fa-angle-left"></div>
@@ -107,7 +86,7 @@
 <section class="banner-container">
 
     <div class="banner">
-        <img src="image/banner-1.jpg" alt="">
+        <img src="image/banner-1.JPG" alt="">
         <div class="content">
             <span>limited offer</span>
             <h3>upto 50% off</h3>
@@ -116,23 +95,21 @@
     </div>
 
     <div class="banner">
-        <img src="image/banner-2.jpg" alt="">
-        <div class="content">
+        <img src="image/banner-2.JPG" alt="">
+        <div class="content">JPG
             <span>limited offer</span>
             <h3>upto 50% off</h3>
             <a href="#" class="btn">shop now</a>
         </div>
     </div>
-
     <div class="banner">
-        <img src="image/banner-3.jpg" alt="">
+        <img src="image/banner-3.JPG" alt="">
         <div class="content">
             <span>limited offer</span>
             <h3>upto 50% off</h3>
             <a href="#" class="btn">shop now</a>
         </div>
     </div>
-
 </section>
 <section class="footer">
     <div class="box-container">

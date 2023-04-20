@@ -26,3 +26,9 @@
   font-size: 16px;
   cursor: pointer;
 }
+
+.logo > img {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}

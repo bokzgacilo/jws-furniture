@@ -6,4 +6,4 @@
 	  'app_secret' => 'b24a86674c7000d632121a01deb1d968', // Replace {app_secret} with your app secret
 	  'default_graph_version' => 'v2.10',
 	]);
-?>
+?>  
