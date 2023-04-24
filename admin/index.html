@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../client/assets/logo.png" type="image/x-icon">
+  <title>JWS Furniture - Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/index.web.css">
+  <script src="js/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+  <aside>
+    <h5>JWS Furniture - Admin</h5>
+    <a name="products">
+      <i class="fa-solid fa-list"></i>
+      <p>Products</p>
+    </a>
+    <a name="inventory">
+      <i class="fa-solid fa-warehouse"></i>
+      <p>Inventory</p>
+    </a>
+    <a name="transaction">
+      <i class="fa-solid fa-money-bill"></i>
+      <p>Transaction</p>
+    </a>
+    <a name="sales">
+      <i class="fa-solid fa-chart-line"></i>
+      <p>Sales</p>
+    </a>
+  </aside>
+
+  <main id="root">
+    <h2>Main</h2>
+  </main>
+  <script src="../client/assets/bootstrap/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      if(location.hash){
+        var sitehash = location.hash.split("#");
+        $(`[name='${sitehash[1]}']`).addClass('active')
+        $('#root').load(`views/${sitehash[1]}.html`);
+      }else {
+        $("[name='products']").addClass('active')
+        $('#root').load(`views/products.html`);
+      }
+      
+      $('a').on("click", function(){
+        $('a').removeClass('active');
+
+        let view_name = $(this).attr('name');
+        location.hash = view_name;
+        $(`[name='${view_name}']`).addClass('active')
+        $('#root').load(`views/${view_name}.html`);
+      })
+    })
+  </script>
+</body>
+</html>
