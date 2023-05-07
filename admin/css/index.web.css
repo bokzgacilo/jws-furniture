@@ -14,12 +14,15 @@ body {
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    color: #fff;
     font-size: 17px;
+    background-color: #513200;
   }
 
   .active {
-    background-color: #8f6400;
+    background-color: #251a00;
     color: #fff;
+    transition: 1s;
   }
 
   aside > a {
@@ -31,17 +34,16 @@ body {
     align-items: center;
     cursor: pointer;
     text-decoration: none;
-    color: #000;
-  }
-
-  aside > a:hover {
-    /* background-color: rgb(242, 242, 242); */
+    color: #fff !important;
   }
 
   #root {
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    max-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
   
   main {

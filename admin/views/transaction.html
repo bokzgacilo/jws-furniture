@@ -1,1 +1,50 @@
-<h2>Transaction</h2>
+<style>
+  
+</style>
+
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="productViewCanvas" aria-labelledby="productViewCanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="productViewCanvasLabel">Backdrop with scrolling</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p>Try scrolling the rest of the page to see this option in action.</p>
+  </div>
+</div>
+
+<h4>Transactions</h4>
+<div class="custom-table" style="width:100%">
+  <div class="t-header">
+    <p class="col-4">Transaction ID</p>
+    <p class="col-2">Reference Number</p>
+    <p class="col-1">Amount</p>
+    <p class="col-2">Status</p>
+    <p class="col">Date Created</p>
+  </div>
+  <div class="t-body">
+    <div class="t-data">
+      <p class="col">Fetching data...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function getAllTransactions(){
+    $.ajax({
+      type: 'get',
+      url: 'api/getAllTransactions.php',
+      success: (response) => {
+        $('.t-body').html(response)
+      }
+    })
+  }
+
+  function viewTransaction(id){
+    // console.log(id)
+    $('#productViewCanvas').offcanvas('toggle');
+  }
+  
+  $(document).ready(function(){
+    getAllTransactions()
+  })
+</script>
