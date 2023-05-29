@@ -10,13 +10,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="../client/assets/logo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../assets/logo.png" type="image/x-icon">
   <title>JWS Furniture - Admin</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/index.web.css">
+  <link rel="stylesheet" href="../assets/rich-text-editor/src/richtext.min.css">
+
   <script src="js/jquery-3.6.4.min.js"></script>
-  <script src="js/jquery.dataTables.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js" integrity="sha512-mlz/Fs1VtBou2TrUkGzX4VoGvybkD9nkeXWJm3rle0DPHssYYx4j+8kIS15T78ttGfmOjH0lLaBXGcShaVkdkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="../assets/rich-text-editor/src/jquery.richtext.min.js"></script>
+
+  <!-- <script src="js/jquery.dataTables.min.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js" integrity="sha512-mlz/Fs1VtBou2TrUkGzX4VoGvybkD9nkeXWJm3rle0DPHssYYx4j+8kIS15T78ttGfmOjH0lLaBXGcShaVkdkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 </head>
 <body>
   <aside>
@@ -45,12 +49,11 @@
   <main id="root">
     <h2>Main</h2>
   </main>
-  <script src="../client/assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function(){
       if(location.hash){
         var sitehash = location.hash.split("#");
-        console.log(location)
         $(`[name='${sitehash[1]}']`).addClass('active')
 
         $('#root').load(`views/${sitehash[1]}.html`);

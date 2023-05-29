@@ -1,9 +1,9 @@
-@import url(../../client/assets/bootstrap/css/bootstrap.min.css);
-@import url(../../client/assets/fontawesome/css/all.min.css);
+@import url(../../assets/bootstrap/css/bootstrap.min.css);
+@import url(../../assets/fontawesome/css/all.min.css);
 @import url(jquery.dataTables.min.css);
 @import url(dataTables.bootstrap5.min.css);
 
-h2, h4{
+h2, h4, h5, h6{
   margin: 0;
 }
 
@@ -54,4 +54,8 @@ main {
   width: 50px;
   height: 50px;
   object-fit: cover;
+}
+
+.modal-content {
+  border-radius: 0;
 }

@@ -9,7 +9,6 @@
       <p class='col-1'>".$row['id']."</p>
       <a id='".$row['id']."' onclick='viewImage(this.id)' class='col'>".$row['name']."</a>
       <p class='col-1'>".$row['price']."</p>
-      <p class='col'>".$row['description']."</p>
     </div>";
   }
 

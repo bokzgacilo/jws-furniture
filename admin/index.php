@@ -37,7 +37,7 @@
     }
   </style>
     <form id="loginForm">
-      <img src="../client/assets/logo.png"/>
+      <img src="../assets/logo.png"/>
       <h5 class="mt-4 mb-2">Admin Login</h5>
       <input required class="form-control" name="username" type="text" placeholder="Username" />
       <input required class="form-control" name="password" type="password" placeholder="Password" />
@@ -76,6 +76,6 @@
 
 <?php
   }else {
-    header('location: dashboard.html');
+    header('location: dashboard.php');
   }
 ?>

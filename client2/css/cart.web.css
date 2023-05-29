@@ -1,0 +1,125 @@
+article {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 88vh;
+}
+
+.order-summary {
+  padding: 1rem 4%;
+  gap: 1rem;
+}
+
+.shopping-cart{
+  padding: 1rem 8%;
+}
+
+.shopping-cart {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 88vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.total-price {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+}
+
+.cart {
+  margin-top: 2%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.my-cart-header {
+  display: grid;
+  grid-template-columns: 55% 15% 15% 15%;
+  align-items: center;
+  font-size: 12px;
+  color: rgb(127, 127, 127);
+}
+
+.order {
+  display: grid;
+  grid-template-columns: 55% 15% 15% 15%;
+  font-size: 14px;
+}
+
+.opd > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.quantity {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.quantity > a {
+  cursor: pointer;
+}
+
+.opd {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.opd > div > a {
+  text-decoration: none;
+  color: red;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.opd > img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+
+.my-order {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.shopping-cart > a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  font-size: 14px;
+  gap: 0.5rem;
+}
+
+.shipping-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-summary {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(246, 246, 246);
+}
+
+.sc-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
