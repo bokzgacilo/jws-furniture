@@ -1,33 +1,30 @@
 <?php
-  include('connection.php');
   session_start();
-
-  $id = $_POST['id'];
+  include('connection.php');
+  
+  $productID = $_POST['product_id'];
   $quantity = $_POST['quantity'];
-  $user = $_SESSION['client'];
 
-  $getUserCart = $conn -> query("SELECT * FROM user WHERE id='".$user."'");
-  $cart = "";
-  while($row = $getUserCart -> fetch_array()){
-    $cart = $row['cart'];
-  }
+  // echo $quantity;
+  $clientID = $_SESSION['client'];
+  $user = $conn -> query("SELECT cart FROM user WHERE uid='$clientID'");
+  $user = $user -> fetch_assoc();
 
-  $cartJSON = json_decode($cart, true);
-  $searchKey = 'id';
-  $searchValue = "$id";
+  $userCart = json_decode($user['cart'], true);
 
-  foreach ($cartJSON as $cartJSON) {
-    foreach ($cartJSON as $key => $value) {
-      if($key === $searchKey && $value === $searchValue){
-        echo "Found the value '$searchValue' in the key '$searchKey' of an object.";
-        break 2;
-      }
-    }
-  }
+  $ToCart = (array)[
+    "id" => $productID,
+    "quantity" => $quantity
+  ];
 
-  // echo 'not in the cart';
+  $userCart[$productID] = $ToCart;
+
+  $newCart = json_encode($userCart);
   
-  echo json_encode($cartJSON);
+
+  $sql =  $conn -> query("UPDATE user SET cart='$newCart' WHERE uid='$clientID'");
   
-  $conn -> close();
+  if($sql){
+    echo 1;
+  }
 ?>

@@ -5,10 +5,10 @@
 
   while($row = $sql -> fetch_array()){
     echo "
-    <div class='t-data'>
-      <p class='col-1'>".$row['id']."</p>
-      <a id='".$row['id']."' onclick='viewImage(this.id)' class='col'>".$row['name']."</a>
-      <p class='col-1'>".$row['price']."</p>
+    <div data-target='product-modal' class='js-modal-trigger card p-4' id='".$row['id']."' onclick='viewImage(this.id)'>
+      <img src='".$row['product_photo']."' />
+      <p class='is-size-5 has-text-weight-semibold'>".$row['name']."</p>
+      <p class='is-size-5'>₱ ".number_format($row['price'], 2, '.', ',')."</p>
     </div>";
   }
 

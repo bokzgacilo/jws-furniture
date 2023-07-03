@@ -1,5 +1,5 @@
 <?php
-  session_start();
+  header('location: shop.php');
 ?>
 
 <!DOCTYPE html>
@@ -16,82 +16,14 @@
   <script src="../assets/sweetalert2@11.js"></script>
 </head>
 <body>
-  <!-- Navigator -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="navigator" aria-labelledby="navigatorLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="navigatorLabel">Menu</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <a href="shop.php">Catalogs</a>
-      <a href="">New Arrivals</a>
-      <a href="">Help</a>
-      <a href="">About</a>
-    </div>
-  </div>
 
-  <!-- Not Logged OffCanvas -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="account" aria-labelledby="accountLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="accountLabel">Account</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <a href="api/login.php">Login</a>
-    </div>
-  </div>
-
-  <!-- Logged OffCanvas -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="loggedAccount" aria-labelledby="loggedAccountLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="loggedAccountLabel">Account</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-     
-      <a href="api/logout.php">Logout</a>
-    </div>
-  </div>
+  
 
   <main>
-    <header>
-      <div class="brand">
-        <img src="../assets/logo.png" />
-        <h5>JWS FURNITURES</h5> 
-      </div>
-      <form id="searchForm" method="get" action="shop.php">
-        <input type="text" name="q" placeholder="Search in JWS Furniture" >
-        <button>
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </form>
-      <div class="action">
-      <style>
-    </style>
-        <?php
-          if(isset($_SESSION['client'])){
-            echo "
-              <a title='My Cart' href='cart.php'>
-                <i class='fa-solid fa-cart-shopping'></i>
-              </a>
-              <a data-bs-toggle='offcanvas' href='#loggedAccount' role='button' aria-controls='loggedAccount' title='My Account'>
-                <img src='../assets/default-picture.jpg' />
-              </a>
-            ";
-          }else {
-            echo "
-              <a data-bs-toggle='offcanvas' href='#account' role='button' aria-controls='account' title='Account'>
-                <i class='fa-solid fa-user'></i>
-              </a>
-            ";
-          }
-        ?>
-        
-        <a data-bs-toggle='offcanvas' href='#navigator' role='button' aria-controls='navigator' title="Show Menu">
-          <i class="fa-solid fa-bars"></i>
-        </a>
-      </div>
+    <header id="header-container">
+      
     </header>
+  
     <article>
       <section class="carousel-section">
         <div id="bannerCarousel" class="carousel slide">
@@ -172,7 +104,9 @@
       
     </article>
   </main>
-  
+  <?php
+
+  ?>
   <script src="../assets/popper.min.js"></script>
   <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
   <script>
@@ -192,7 +126,6 @@
     ?>
 
     $(document).ready(function(){
-
     })
 
     $(window).scroll(function() {
@@ -204,5 +137,6 @@
       }
     });
   </script>
+  <script src="loader.js"></script>
 </body>
 </html>

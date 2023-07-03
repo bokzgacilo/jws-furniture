@@ -6,7 +6,7 @@
   $client -> setAuthConfig('google-client.json');
   
   // DEVELOPMENT
-  $client -> setRedirectUri('http://localhost/jws-furniture/client/api/google-login.php');
+  $client -> setRedirectUri('http://localhost/jws-furniture/client2/api/google-login.php');
   // LIVE
   // $client -> setRedirectUri('https://jwsfurniture.website/api/google-login.php');
 

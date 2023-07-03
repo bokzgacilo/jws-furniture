@@ -9,8 +9,8 @@
 
     echo "
       <a name='".$row['category']."'>
-        ".$row['category']."
-        <span>".$count -> num_rows."</span>
+        <img src='../assets/icon/".$row['category'].".png' />
+        <h5>".$row['category']."</h5>
       </a>
     ";
   }

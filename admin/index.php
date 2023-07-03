@@ -30,24 +30,23 @@
     }
 
     form > img {
-      width: 140px;
-      height: 140px;
+      width: 200px;
+      height: 200px;
       object-fit: cover;
       align-self: center;
     }
   </style>
     <form id="loginForm">
       <img src="../assets/logo.png"/>
-      <h5 class="mt-4 mb-2">Admin Login</h5>
-      <input required class="form-control" name="username" type="text" placeholder="Username" />
-      <input required class="form-control" name="password" type="password" placeholder="Password" />
-      <button class="btn btn-primary" type="submit">LOGIN</button>
+      <p class="is-size-4 has-text-weight-bold mt-4">Admin Login</p>
+      <input required class="input" name="username" type="text" placeholder="Username" />
+      <input required class="input" name="password" type="password" placeholder="Password" />
+      <button class="button is-link" type="submit">LOGIN</button>
     </form>
   </body>
 
   <script>
     $(document).ready(function(){
-      // alert()
       $('#loginForm').submit(function(event){
         event.preventDefault();
 

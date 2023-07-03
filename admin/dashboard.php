@@ -5,7 +5,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style = 'overflow-y:hidden'>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,28 +18,27 @@
 
   <script src="js/jquery-3.6.4.min.js"></script>
   <script src="../assets/rich-text-editor/src/jquery.richtext.min.js"></script>
-
-  <!-- <script src="js/jquery.dataTables.min.js"></script> -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js" integrity="sha512-mlz/Fs1VtBou2TrUkGzX4VoGvybkD9nkeXWJm3rle0DPHssYYx4j+8kIS15T78ttGfmOjH0lLaBXGcShaVkdkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../assets/sweetalert2@11.js"></script>
 </head>
 <body>
   <aside>
-    <h4>Dashboard</h4>
+    <h4 class="has-text-weight-bold is-size-4 mb-4">Dashboard</h4>
     <a name="products">
       <i class="fa-solid fa-list"></i>
       <p>Products</p>
     </a>
     <a name="inventory">
       <i class="fa-solid fa-warehouse"></i>
-      <p>Inventory</p>
+      <p class="is-size-6">Inventory</p>
     </a>
     <a name="transaction">
       <i class="fa-solid fa-money-bill"></i>
-      <p>Transaction</p>
+      <p>Transaction and Sales</p>
     </a>
-    <a name="sales">
-      <i class="fa-solid fa-chart-line"></i>
-      <p>Sales</p>
+    <a name="order">
+      <i class="fa-solid fa-box"></i>
+      <p>Orders</p>
     </a>
     <a href="api/logout.php">
       <p>Logout</p>
@@ -50,26 +49,28 @@
     <h2>Main</h2>
   </main>
   <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+
   <script>
     $(document).ready(function(){
       if(location.hash){
         var sitehash = location.hash.split("#");
         $(`[name='${sitehash[1]}']`).addClass('active')
 
-        $('#root').load(`views/${sitehash[1]}.html`);
+        $('#root').load(`views/${sitehash[1]}.php`);
 
       }else {
         $("[name='products']").addClass('active')
-        $('#root').load(`views/products.html`);
+        $('#root').load(`views/products.php`);
       }
       
       $('a').on("click", function(){
         $('a').removeClass('active');
 
         let view_name = $(this).attr('name');
+
         location.hash = view_name;
         $(`[name='${view_name}']`).addClass('active')
-        $('#root').load(`views/${view_name}.html`);
+        $('#root').load(`views/${view_name}.php`);
       })
     })
   </script>

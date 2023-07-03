@@ -1,44 +1,64 @@
 <?php
   include('api/connection.php');
   session_start();
+
+  if(!isset($_SESSION['client'])){
+    header("location: shop.php");
+  }
+
   $userID = $_SESSION['client'];
-  $sql = $conn -> query("SELECT * FROM user WHERE id=$userID");
+
+  $sql = $conn -> query("SELECT * FROM user WHERE uid='$userID'");
+
+  $getAddress = $conn -> query("SELECT * FROM address WHERE uid='$userID'");
+  $getAddress = $getAddress -> fetch_assoc();
 
   $cartHTML = "";
   $cartJSON = "";
+  $cartCount = 0;
+  $totalPrice = 0;
 
   while($row = $sql -> fetch_array()){
     $cart = $row['cart'];
+
     $cartJSON = json_decode($cart, true);
 
-    foreach ($cartJSON as $value => $item) {
-      $productQuery = $conn -> query("SELECT * FROM product WHERE id='".$item['id']."'");
-      $product = $productQuery -> fetch_assoc();
+    if($cart != 'none'){
+      $cartCount = count($cartJSON);
 
-      $cartHTML .= "
-        <div class='order'>
-          <div class='opd'>
-            <img src='".$product['product_photo']."' />
-            <div>
-              <h6>".$product['name']."</h6>
-              <a class='mt-2'>Remove</a>
+      foreach ($cartJSON as $value => $item) {
+        $productQuery = $conn -> query("SELECT * FROM product WHERE id='".$item['id']."'");
+        $product = $productQuery -> fetch_assoc();
+  
+        $cartHTML .= "
+          <div class='order'>
+            <a class='remove-item' onclick='removeFromCart(this.id)' id='".$item['id']."'>Remove</a>
+            <div class='opd'>
+              <img src='".$product['product_photo']."' />
+              <div>
+                <p class='is-size-6 has-text-weight-semibold'>".$product['name']."</p>
+              </div>
             </div>
+            <div class='quantity text-center'>
+              <a onclick='minusQuantity(this.id)' id='".$item['id']."'>
+                <i class='fa-solid fa-minus' ></i>
+              </a>
+              <p class='is-size-5'>".$item['quantity']."</p>
+              <a onclick='plusQuantity(this.id)' id='".$item['id']."'a>
+                <i class='fa-solid fa-plus' ></i>
+              </a>
+            </div>
+            <p class='is-size-6 text-center'>₱ ".number_format($product['price'], 2, '.', ',')."</p>
+            <p class='is-size-6 text-center'>₱ ".number_format(($product['price'] * $item['quantity']), 2, '.', ',')."</p>
           </div>
-          <div class='quantity text-center'>
-            <a>
-              <i class='fa-solid fa-minus'></i>
-            </a>
-            <p>2</p>
-            <a>
-              <i class='fa-solid fa-plus'></i>
-            </a>
-          </div>
-          <p class='text-center'>₱".$product['price']."</p>
-          <p class='text-center'>₱".($product['price']*$item['quantity'])."</p>
-        </div>
-      ";
+        ";
+  
+        $totalPrice += $product['price'] * $item['quantity'];
+      }
+    }else if($cart == '[]'){
+      $cartHTML .= "<p>No item in your cart.</p>";
     }
-  }
+
 ?>
 
 <!DOCTYPE html>
@@ -53,212 +73,108 @@
   <link rel="stylesheet" href="css/cart.web.css">
   <link rel="icon" type="image/x-icon" href="../assets/logo.png">
   <script src="js/jquery-3.6.4.min.js"></script>
+  <script src="js/cart-ui.js"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AXASf7DPSCDhFHr2S_QlnAFaKlkG4vzcG07zUMT2LFeuCwzoqKC2tw48tP-UUhufhKogkbBegUiYODH1&currency=PHP&components=buttons"></script>
 </head>
 <body>
-  <!-- Navigator -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="navigator" aria-labelledby="navigatorLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="navigatorLabel">Menu</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <a href="shop.php">Catalogs</a>
-      <a href="">New Arrivals</a>
-      <a href="">Help</a>
-      <a href="">About</a>
-    </div>
-  </div>
-
-  <!-- Not Logged OffCanvas -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="account" aria-labelledby="accountLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="accountLabel">Account</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <a href="api/login.php">Login</a>
-    </div>
-  </div>
-
-  <!-- Logged OffCanvas -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="loggedAccount" aria-labelledby="loggedAccountLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="loggedAccountLabel">Account</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <?php
-        echo $_SESSION['client'];
-      ?>
-      <a href="api/logout.php">Logout</a>
-    </div>
-  </div>
-
   <main>
-    <header>
-      <div class="brand">
-        <img src="../assets/logo.png" />
-        <h5>JWS FURNITURES</h5> 
-      </div>
-      <form id="searchForm">
-        <input type="text" name="q" placeholder="Search in JWS Furniture" >
-        <button>
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </form>
-      <div class="action">
-        <?php
-          if(isset($_SESSION['client'])){
-            echo "
-              <a title='My Cart' href='cart.php'>
-                <i class='fa-solid fa-cart-shopping'></i>
-              </a>
-              <a data-bs-toggle='offcanvas' href='#loggedAccount' role='button' aria-controls='loggedAccount' title='My Account'>
-                <img src='../assets/default-picture.jpg' />
-              </a>
-            ";
-          }else {
-            echo "
-              <a data-bs-toggle='offcanvas' href='#account' role='button' aria-controls='account' title='Account'>
-                <i class='fa-solid fa-user'></i>
-              </a>
-            ";
-          }
-        ?>
+    <header id="header-container">
 
-        <a data-bs-toggle='offcanvas' href='#navigator' role='button' aria-controls='navigator' title="Show Menu">
-          <i class="fa-solid fa-bars"></i>
-        </a>
-      </div>
     </header>
+
     <article>
       <div class="shopping-cart">
-        <a href="shop.php">
-          <i class="fa-solid fa-regular fa-arrow-left-long"></i>
-          Continue Shopping
-        </a>
         <div class="sc-header">
-          <h4>Shopping Cart</h4>
-          <h4><?php echo count($cartJSON); ?> Items</h4>
+          <p class="is-size-4 has-text-weight-bold">Shopping Cart</p>
+          <p class="is-size-5 has-text-weight-semibold"><?php echo $cartCount; ?> Items</p>
         </div>
         <div class="cart">
-          <div class="my-cart-header">
-            <p>PRODUCT DETAILS</p>
-            <p class="text-center">QUANTITY</p>
-            <p class="text-center">PRICE</p>
-            <p class="text-center">TOTAL</p>
-          </div>
           <div class="my-order">
             <?php echo $cartHTML; ?>
-            <!-- <div class="order">
-              <div class="opd">
-                <img src="../uploads/products/111196-W-2.jpg" />
-                <div>
-                  <h6>Testing Product</h6>
-                  <a class="mt-2">Remove</a>
-                </div>
-              </div>
-              <div class="quantity text-center">
-                <a>
-                  <i class="fa-solid fa-minus"></i>
-                </a>
-                <p>2</p>
-                <a>
-                  <i class="fa-solid fa-plus"></i>
-                </a>
-              </div>
-              <p class="text-center">₱44.00</p>
-              <p class="text-center">₱88.00</p>
-            </div>
-            <div class="order">
-              <div class="opd">
-                <img src="../uploads/products/chair.jpg" />
-                <div>
-                  <h6>Testing Product</h6>
-                  <a class="mt-2">Remove</a>
-                </div>
-              </div>
-              <div class="quantity text-center">
-                <a>
-                  <i class="fa-solid fa-minus"></i>
-                </a>
-                <p>1</p>
-                <a>
-                  <i class="fa-solid fa-plus"></i>
-                </a>
-              </div>
-              <p class="text-center">₱249.99</p>
-              <p class="text-center">₱249.99</p>
-            </div>
-            <div class="order">
-              <div class="opd">
-                <img src="../uploads/products/computer-table.jpg" />
-                <div>
-                  <h6>Testing Product</h6>
-                  <a class="mt-2">Remove</a>
-                </div>
-              </div>
-              <div class="quantity text-center">
-                <a>
-                  <i class="fa-solid fa-minus"></i>
-                </a>
-                <p>1</p>
-                <a>
-                  <i class="fa-solid fa-plus"></i>
-                </a>
-              </div>
-              <p class="text-center">₱119.99</p>
-              <p class="text-center">₱119.99</p>
-            </div> -->
           </div>
         </div>
       </div>
       <div class="order-summary">
-        <h4>Order Summary</h4>
-        <div class="total-price">
-          <p>3 ITEMS</p>
-          <p>₱457.98</p>
+        
+
+        <div class="mt-4 card p-4">
+          <div class="mb-4 total-price">
+            <p class="is-size-5 has-text-weight-semibold">Delivery Address</p>
+            <a href="user.php" class="button is-small">Edit</a>
+          </div>
+          <p><?php echo $row['name']; ?></p>
+          <p><?php echo $getAddress['contact']; ?></p>
+          <p><?php echo $getAddress['block'] . ', ' . $getAddress['street'] . ', ' . $getAddress['barangay']; ?></p>
+          <p><?php echo $getAddress['city'] . ', ' . $getAddress['province']; ?></p>
         </div>
-        <hr>
-        <div class="total-price">
-          <h6>Shipping Details</h6>
-          <a href="">Edit</a>
+        <div class="mt-4 total-price">
+          <p class="has-text-weight-medium is-size-5">Total Cost</p>
+          <p class="is-size-4 has-text-weight-bold">₱ <?php echo number_format($totalPrice, 2, '.', ','); ?></p>
         </div>
-        <div class="shipping-details">
-          <p>Name: Ariel Jericko Gacilo</p>
-          <p>Contact Number: 09762220951</p>
-          <p>House/Building Number: Block 282 Lot 5</p>
-          <p>Street: Lilac Street</p>
-          <p>Barangay: Rizal</p>
-          <p>Municipality: Makati</p>
-          <p>Region: Metro Manila</p>
-        </div>
-        <hr>  
-        <div class="mb-4 total-price">
-          <h5>Total Cost</h5>
-          <h5>₱457.98</h5>
-        </div>
-        <button class="btn btn-primary">CHECKOUT</button>
+        <button class="button is-link js-modal-trigger" data-target="modal-js-example" 
+          <?php
+            if($cartCount == 0){
+              echo "disabled";
+            }
+          ?>
+        >
+          Proceed To Payment
+        </button>
+        <a class="button is-secondary" href="shop.php">
+          Continue Shopping
+        </a>
       </div>
     </article>
   </main>
 
+  <div id="modal-js-example" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+      <div class="box">
+        <h4 class="is-size-4 has-text-weight-bold">Select Payment Method</h4>
+        <div class="mt-4 payment-methods">
+          <div class="card">
+            <div class="card-content">
+              <form id="GCashForm" action="api/xendit.php" method="post" class="content">
+                <input type="hidden" name="amount" value="<?php echo $totalPrice; ?>" />
+                <input type="hidden" name="description" value="Testing Payment" />
+                <img src="../assets/icon/gcash-fixed.png" />
+                <button type="submit" class="w-100 button is-link">Choose GCash</button>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <form action="api/paypal-charge.php" method="post" class="content">
+                <input type="hidden" name="amount" value="<?php echo $totalPrice; ?>" />
+                <input type="hidden" name="description" value="Testing Payment" />
+                <img src="../assets/icon/paypal-fixed.png" />
+                <button type="submit" class="w-100 button is-link">Choose PayPal</button>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-content">
+              <form action="api/maya.php" method="post" class="content">
+                <input type="hidden" name="amount" value="<?php echo $totalPrice; ?>" />
+                <input type="hidden" name="description" value="Testing Payment" />
+                <img src="../assets/icon/maya-fixed.png" />
+                <button type="submit" class="w-100 button is-link">Choose Maya</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
   <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
-  <script>
-    $(window).scroll(function() {
-      if ($(this).scrollTop() > 0){  
-        $('header').addClass("bordered");
-      }
-      else{
-        $('header').removeClass("bordered");
-      }
-    });
-  </script>
+  <script src="loader.js"></script>
+  <script src="js/cart.js"></script>
 </body>
 </html>
-
 <?php
-  // }else {
-  //   header("location: index.php?warning=No Search Item");
-  // }
+  }
 ?>

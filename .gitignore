@@ -3,3 +3,4 @@
 /client/api/facebook-callback.php
 /client/api/google-login.php
 /client/api/google-client.php
+/client2/api/connection.php
