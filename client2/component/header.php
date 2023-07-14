@@ -9,25 +9,6 @@
   }
 ?>
 
-<div class="modal" id="addressModal"  tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="addressModalLabel">Address</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-  
-
 <div class="offcanvas offcanvas-end" tabindex="-1" id="navigator" aria-labelledby="navigatorLabel">
   <div class="offcanvas-header">
     <p class="title" id="navigatorLabel">Menu</p>
@@ -74,7 +55,7 @@
       <button class="button is-ghost w-100">Forgot Password?</button>
     </form>
     <h6 class="mt-4 title is-size-5">Or log in as</h6>
-    <a class="signas" href="api/facebook-login-direct.php?id=36">
+    <a class="signas" href="api/facebook-login.php">
       <img src="../assets/icon/facebook.png" />
       Facebook
     </a>
@@ -99,9 +80,16 @@
   </div>
 </div>
 
+<style>
+  .brand > a {
+    color: #6E481E;
+    text-decoration: none;
+  }
+</style>
+
 <div class="brand">
   <img src="../assets/logo.png" />
-  <h5>JWS FURNITURES</h5> 
+  <a href='index.php' class='is-size-4 has-text-weight-bold'>JWS FURNITURES</a>
 </div>
 <form id="searchForm" method="get" action="shop.php">
   <input type="text" id="searchInput" name="q" placeholder="Search in JWS Furniture" >
@@ -113,7 +101,7 @@
   <?php
     if(isset($_SESSION['client'])){
       echo "
-        
+
         <a data-bs-toggle='offcanvas' href='#loggedAccount' role='button' aria-controls='loggedAccount' title='My Account'>
           <img src='".$getUser['photo_url']."' />
         </a>
@@ -154,7 +142,7 @@
     const path = window.location.href.split('?')[0];
     const newURL = `${path}?${inputParams}`;
 
-    history.pushState({}, '', newURL);  
+    history.pushState({}, '', newURL);
   })
 
   // For Login
@@ -174,7 +162,7 @@
       },
       complete: () => {
         switch(statusCode){
-          case 1: 
+          case 1:
             Swal.fire({
               title: 'Login Successfully',
               text: "Thank you for logging in",
@@ -187,14 +175,14 @@
               location.reload();
             })
             break;
-          case 0: 
+          case 0:
             $('#error-login').text('Invalid email or password. Please try again.')
             break;
         }
       }
     })
   })
-    
+
   // For Register
   $(document).on('submit', '#registerForm', function(event){
     event.preventDefault();
@@ -212,7 +200,7 @@
       },
       complete: () => {
         switch(statusCode){
-          case 1: 
+          case 1:
             Swal.fire({
               title: 'Registered Successfully',
               text: "Thank you for registering.",
@@ -225,7 +213,7 @@
               location.reload();
             })
             break;
-          case 2: 
+          case 2:
             Swal.fire({
               title: 'Email is already registered',
               text: "The email you tried to registered with is already on the database. Please contact the administrator to verify your concern.",
@@ -238,7 +226,7 @@
               location.reload();
             })
             break;
-          case 5: 
+          case 5:
             $("input[name='regPassword']").addClass('is-danger');
             $("input[name='reregPassword']").addClass('is-danger');
             $('.password-error').text('Password not matching.')

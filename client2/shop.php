@@ -16,7 +16,6 @@
     $sql = $conn -> query("SELECT * FROM product");
   }
 
-
   if($sql -> num_rows != 0){
     while($row = $sql -> fetch_array()){
       $products .= "

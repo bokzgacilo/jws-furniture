@@ -40,4 +40,14 @@
       return $query;
     }
   }
+
+  $my_orm = new bok_orm();
+  $dynamic_id = rand(000000, 999999);
+
+  if(isset($_POST['input'])){
+    $selectors = $_POST['input'];
+    $where = $_POST['where'];
+    echo $my_orm -> select([$selectors]) -> from('useraccounts') -> where($where) -> result();
+  }
+
 ?>

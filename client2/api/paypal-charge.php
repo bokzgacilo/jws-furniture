@@ -1,7 +1,6 @@
 <?php
   require '../../vendor/autoload.php';
 
-
   require_once('paypal-config.php');
 
   try {
@@ -18,7 +17,6 @@
       sleep(2);
 
       $response -> redirect();
-      // echo 'hello';
     }else {
       echo $response -> getMessage();
     }

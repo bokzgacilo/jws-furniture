@@ -35,17 +35,31 @@
   <script src="js/user-ui.js"></script>
 </head>
 <body>
-  <div id="order-products-view" class="modal">
+  <div id="order-viewer" class="modal">
     <div class="modal-background"></div>
 
-    <div class="modal-card">
-        <div class="modal-card-head">
-          <p class="modal-card-title">Modal title</p>
-          <button class="delete" aria-label="close"></button>
+    <div class="modal-content">
+      <div class="box">
+        <div id='order-body'>
+
         </div>
-        <div class="modal-card-body">
-          <!-- Content ... -->
-        </div>
+      </div>
+    </div>
+
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
+
+  <div id="password-modal" class="modal">
+    <div class="modal-background"></div>
+
+    <div class="modal-content">
+      <div class="box">
+        <p class='is-size-4 has-text-weight-bold mb-4'>Change Password</p>
+        <form action='api/changepassword.php' method='post'>
+          <input name='password' type='text' class='input w-100 mb-4' value='<?php echo $user['password']; ?>'/>
+          <button type='submit' class='button is-primary'>Change Password</button>
+        </form>
+      </div>
     </div>
 
     <button class="modal-close is-large" aria-label="close"></button>
@@ -53,7 +67,8 @@
 
   <main>
     <div class="profile-header">
-      <a class="button is-link" href="shop.php">Back to Shopping</a>
+      <a class="button is-link me-2" href="shop.php">Back to Shopping</a>
+      <a class="button js-modal-trigger" data-target="password-modal">Change Password</a>
     </div>
     <div class="basic card">
       <form id="avatarForm" enctype="multipart/form-data" class="avatar">
@@ -80,7 +95,7 @@
         <p><?php echo $address['contact'];?></p>
 
         <div class="mt-4 title-address">
-          <p class="is-size-4 has-text-weight-bold">Delivery Address</p> 
+          <p class="is-size-4 has-text-weight-bold">Delivery Address</p>
           <a class="button is-small js-modal-trigger" data-target="modal-js-example">Edit</a>
         </div>
         <p><?php echo $address['block'];?></p>
@@ -104,78 +119,56 @@
               $itemCount = count(json_decode($row['orders'], true));
 
               echo "
-                <div class='order card pt-2 pb-2 pl-4 pr-4'>
+                <div class='order card pt-2 pb-2 pl-4 pr-4 mb-2'>
                   <div>
-                    <a class='is-size-6 has-text-weight-medium js-modal-trigger' id='$order' data-target='order-products-view'>$order</a>
+                    <a class='is-size-6 has-text-weight-medium order-id' id='$order'>$order</a>
                     <p class='is-size-7'>".date("F j, Y, g:i a", strtotime($row['date_created']))."</p>
                   </div>
                   <div>
                     <p>₱ ".number_format($row['amount'], 2, '.', ',')." <span class='is-size-7'>$itemCount item/s </span></p>
                   </div>
                   <div>
-                    <p class='is-size-7'>".$show_status['status_description']."</p> 
-                    <a class='is-size-7' target='_blank' href='https://www.messenger.com/t/100092144012686'>Contact JWS</a>
-                  </div>
+                    <p class='is-size-7'>".$show_status['status_description']."</p>";
+
+                    if($row['reviewed'] == 'true'){
+                      echo "
+                        <span class='tag is-medium'>Reviewed</span>
+                      ";
+                    }else {
+                      echo "
+                        <a href='review_page.php?transaction_id=".$order."' class='button is-link is-small'>Submit Review</a>
+                      ";
+                    }
+
+                  echo "</div>
                 </div>
               ";
             }
           }
-        }            
-      ?>  
-      <!-- <table class="table">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Date</th>
-            <th>Items</th>
-            <th>Cost</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-
-            if($user['orders'] != "none"){
-              foreach ($userOrder as $order) {
-                $select_order = $conn -> query("SELECT * FROM transactions WHERE reference_number='$order'");
-                $show_status = $conn -> query("SELECT * FROM production WHERE client='".$user['uid']."' AND reference_number='$order'");
-                $show_status = $show_status -> fetch_assoc();
-
-                while($row = $select_order -> fetch_array()){
-                  $itemCount = count(json_decode($row['orders'], true));
-  
-                  echo "
-                    <tr>
-                      <th>
-                        $order
-                        <a id='$order' class='js-modal-trigger view-order-button' data-target='order-products-view'>View</a>
-                      </th>
-                      <th>".date("F j, Y, g:i a", strtotime($row['date_created']))."</th>
-                      <th>
-                        $itemCount Items
-                      </th>
-                      <th>₱ ".number_format($row['amount'], 2, '.', ',')."</th>
-                      <th>
-                        <span class='tag is-primary'>".$show_status['status']."</span>
-                      </th>
-                    </tr>
-                  ";
-                }
-              }
-            }            
-          ?>
-        </tbody> -->
-      </table>
+        }
+      ?>
     </div>
   </main>
 
   <div id="modal-js-example" class="modal">
   <div class="modal-background"></div>
-
   <div class="modal-content">
       <div class="box" id="address-modal-content">
         <p class="is-size-4">Edit Address</p>
         <form id="addressForm">
+          <p class="is-size-6">Email</p>
+          <?php
+            if($user['email'] != 'not set'){
+              echo "
+                <input type='text' name='email' class='input' value='".$user['email']."' disabled />
+              ";
+            }else {
+              echo "
+                <input type='text' name='email' class='input' value='".$user['email']."' />
+              ";
+            }
+          ?>
+
           <p class="is-size-6">Contact Number</p>
           <input type="text" name="contact" class="input" value="<?php echo $address['contact']; ?>"/>
           <p class="is-size-6">House Number/ Block/ Lot</p>
@@ -190,7 +183,6 @@
           <input type="text" name="province" class="input" value="<?php echo $address['province']; ?>"/>
           <button class="button is-success" type="submit">Update Address</button>
         </form>
-        <!-- Your content -->
       </div>
     </div>
 

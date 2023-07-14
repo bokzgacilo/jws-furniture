@@ -76,15 +76,16 @@
     gap: 1rem;
   }
 
-  .order > div:first-of-type > img {
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
+  .orders {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
   }
 
-  .modal-card-body {
-    display: flex;
-    flex-direction: column;
+  .orders > div:first-of-type > img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
   }
 }
 
@@ -158,6 +159,19 @@
   .avatar > img {
     object-fit: cover;
   }
+
+  .orders {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .orders > div:first-of-type > img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+
 
   .order {
     display: flex;

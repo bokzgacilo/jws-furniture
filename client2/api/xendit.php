@@ -23,6 +23,7 @@
 
   $phone = $address['contact'];
   $description = $user['cart'];
+  $_SESSION['gcash_reference_number'] = $reference_id;
 
   Xendit::setApiKey('xnd_development_KrH2sC5EUvrbDsCElxsQKUFhzRozuFg9zlJVu6Gln0wPpLqPluvFJqSEv2WSPKC5');
 

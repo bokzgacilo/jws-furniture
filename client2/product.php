@@ -3,7 +3,7 @@
   include('api/connection.php');
   if (isset($_GET['id'])) {
     $productID = $_GET['id'];
-    $reviewHTML = "";    
+    $reviewHTML = "";
 
     if(!isset($_SESSION['client'])){
 
@@ -37,7 +37,7 @@
         $reviews = 'none';
       }
 
-      
+
       ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -84,7 +84,7 @@
                       <button type="button" class='decrease-button' onclick="decreaseInputValue()" disabled>-</button>
                       <input  name="quantity" type="number"  max='<?php echo $product['stock']; ?>' class="input" value="<?php echo $product_value; ?>" disabled/>
                       <button type="button" class='increase-button' onclick="increaseInputValue()">+</button>
-                    </div> 
+                    </div>
                     <input name="product_id" type="hidden" class="input" value="<?php echo $product['id']; ?>" />
                     <button type="submit" class="button is-link">Add To Cart</button>
                     <p>Sold: <?php echo $product['sold']; ?></p>
@@ -93,8 +93,8 @@
                   <?php
                   }
                 ?>
-                
-                
+
+
                 <p class="is-size-4 has-text-weight-bold">Product Description: </p>
                 <div>
                   <?php echo $product['description']; ?>
@@ -103,27 +103,27 @@
               <div class="review-form">
                 <p class="is-size-4 has-text-weight-bold">Ratings and Review</p>
                 <div class="review-container">
-                  <?php 
+                  <?php
                     if($reviews == 'none'){
-                      echo 'none';
+                      echo "<span class='tag is-medium'>No review to show.</span>";
                     }else {
                       foreach ($reviews as $key => $value) {
                         # code...
-                        $avatar = $conn -> query("SELECT * FROM user WHERE uid='$key'");
+                        $avatar = $conn -> query("SELECT * FROM user WHERE uid='".$value['name']."'");
                         $avatar = $avatar -> fetch_assoc();
-                      
+
                         echo "
-                          <div class='review card'>
+                          <div class='review'>
                             <div class='review-avatar'>
                               <img  src='".$avatar['photo_url']."' />
                             </div>
                             <div class='review-meta'>
                               <div class='meta-info'>
-                                <p class='has-text-weight-bold is-size-5'>".$avatar['name']."</p>
+                                <p class='has-text-weight-bold is-size-6'>".$avatar['name']."</p>
                                 <p class='is-size-7'>".date("F j, Y", strtotime($value['date']))."</p>
                               </div>
                               <p>
-                                ".$value['review']."
+                                ".$value['comment']."
                               </p>
                             </div>
                           </div>
@@ -139,7 +139,7 @@
           <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
           <script src="loader.js"></script>
           <script src="js/product.js">
-           
+
           </script>
         </body>
         </html>
@@ -152,4 +152,3 @@
     echo "No Selected Product";
   }
 ?>
-

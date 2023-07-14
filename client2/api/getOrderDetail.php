@@ -13,15 +13,15 @@
 
     while($row = $select_item -> fetch_array()){
       echo "
-        <div class='order'>
+        <div class='orders mb-4'>
           <div>
             <img src='".$row['product_photo']."' />
           </div>
           <div>
-            <p>".$row['name']."</p>
-            <p>₱ ".number_format($row['price'], 2, '.', ',')."</p>
-            <p>Ordered: ".$item['quantity']."</p>
-            <p>Total: ₱ ".number_format(($item['quantity']*$row['price']), 2, '.', ',')."</p>
+            <p class='is-size-5 has-text-weight-bold'>".$row['name']."</p>
+            <p class='is-size-5'>₱ ".number_format($row['price'], 2, '.', ',')."</p>
+            <p class='is-size-6'>Ordered: ".$item['quantity']."</p>
+            <p class='is-size-6 has-text-weight-medium'>Total: ₱ ".number_format(($item['quantity']*$row['price']), 2, '.', ',')."</p>
           </div>
         </div>
       ";

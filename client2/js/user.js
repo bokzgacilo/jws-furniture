@@ -13,12 +13,28 @@ $(document).on('change', "input[name='avatar_input']", function() {
   $('#change-avatar-button').removeAttr('disabled');
 });
 
+$(document).on('click', '.order-id', function(){
+  let order_id = $(this).attr('id');
+
+  $.ajax({
+    type: 'get',
+    url: 'api/getOrderDetail.php',
+    data: {
+     id: order_id 
+    },
+    beforeSend: () => {
+      
+    },
+    success: response => {
+      $('#order-viewer').addClass('is-active');
+      $('#order-body').html(response);
+    }
+  })
+})
+
 $(document).on('submit', '#avatarForm', function(event){
   event.preventDefault();
-
-  // var imageData = $("input[name='avatar_input']").prop("files")[0];
   
-  // console.log(imageData)
   var formData = new FormData($(this)[0]);
 
   $.ajax({
@@ -35,7 +51,6 @@ $(document).on('submit', '#avatarForm', function(event){
       }
     }
   })
-
 })
 
 
@@ -49,10 +64,16 @@ $(document).on('submit', '#addressForm', function(event){
     url: 'api/editAddress.php',
     data: serializedData,
     success: (response) => {
-      
-
       if(response == 1){
         location.reload();
+      }
+
+      if(response == 3){
+        Swal.fire(
+          'Something went wrong',
+          'The system detected that you want to use email that already registered with another user, please contact the Administrator or <b>use an alternative email</b>.',
+          'error'
+        )
       }
     }
   })

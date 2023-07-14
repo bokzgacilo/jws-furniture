@@ -10,7 +10,7 @@
     $user = $sql -> fetch_assoc();
 
     $_SESSION['client'] = $user['uid'];
-
+    
     echo 1;
   }else {
     echo 0;

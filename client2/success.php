@@ -18,6 +18,10 @@
     $reference_id = $_SESSION['maya_reference_number'];
   }
 
+  if(isset($_SESSION['gcash_reference_number'])){
+    $reference_id = $_SESSION['gcash_reference_number'];
+  }
+
   $user_orders = $user['orders'];
   $cart_order = $user['cart'];
   
@@ -166,6 +170,7 @@
 <?php
   unset($_SESSION['maya_checkout_id']);
   unset($_SESSION['maya_reference_number']);
+  unset($_SESSION['gcash_reference_number']);
   unset($_SESSION['maya_amount']);
   unset($_SESSION['maya_href']);
 ?>
