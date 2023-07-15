@@ -164,6 +164,35 @@
     })
   }
 
+  function complete_delivery(reference_number){
+    Swal.fire({
+      title: 'Complete Delivery?',
+      text: "Once you accept this order there is no turning back",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Deliver order'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: 'post',
+          url: 'api/completeDelivery.php',
+          data: {
+            reference_number: reference_number
+          },
+          success: (response) => {
+            console.log(response)
+
+            if(response == 1){
+              location.reload();
+            }
+          }
+        })
+      }
+    })
+  }
+
   function open_offcanvas(reference_number){
     $.ajax({
       type: 'get',
